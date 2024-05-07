@@ -14,14 +14,21 @@ import java.util.concurrent.Executors;
  */
 public class MatrixUtil {
 
-    public static int[][] concurrentMultiply(int[][] matrixA, int[][] matrixB, ExecutorService executor) throws InterruptedException, ExecutionException {
+    public static int[][] concurrentMultiply(int[][] matrixA, int[][] matrixB, ExecutorService executor) throws InterruptedException {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
+        final int[][] matrixBTrans = new int[matrixSize][matrixSize];
         List<Callable<Object>> tasks = new ArrayList<>();
 
         for (int i = 0; i < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
+                matrixBTrans[i][j] = matrixB[j][i];
+            }
+        }
+
+        for (int i = 0; i < matrixSize; i++) {
             int finalI = i;
-            tasks.add(Executors.callable(() -> getTask(matrixA, matrixB, finalI, matrixC)));
+            tasks.add(Executors.callable(() -> getTask(matrixA, matrixBTrans, finalI, matrixC)));
         }
         executor.invokeAll(tasks);
         return matrixC;
@@ -32,7 +39,7 @@ public class MatrixUtil {
         for (int j = 0; j < matrixSize; j++) {
             int sum = 0;
             for (int k = 0; k < matrixSize; k++) {
-                sum += matrixA[finalI][k] * matrixB[k][j];
+                sum += matrixA[finalI][k] * matrixB[j][k];
             }
             matrixC[finalI][j] = sum;
         }
