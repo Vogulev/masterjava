@@ -1,6 +1,8 @@
 
 package ru.javaops.masterjava.xml.schema;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;/sequence>
  *       &lt;attribute name="flag" use="required" type="{http://javaops.ru}flagType" />
  *       &lt;attribute name="city" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
- *       &lt;attribute name="group" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
+ *       &lt;attribute name="group" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREFS" />
  *       &lt;attribute name="email" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -51,8 +53,8 @@ public class User {
     protected Object city;
     @XmlAttribute(name = "group", required = true)
     @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Object group;
+    @XmlSchemaType(name = "IDREFS")
+    protected List<Object> group;
     @XmlAttribute(name = "email")
     protected String email;
 
@@ -131,25 +133,30 @@ public class User {
     /**
      * Gets the value of the group property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Object getGroup() {
-        return group;
-    }
-
-    /**
-     * Sets the value of the group property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the group property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getGroup().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Object }
+     * 
+     * 
      */
-    public void setGroup(Object value) {
-        this.group = value;
+    public List<Object> getGroup() {
+        if (group == null) {
+            group = new ArrayList<Object>();
+        }
+        return this.group;
     }
 
     /**
