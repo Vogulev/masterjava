@@ -51,7 +51,8 @@
                         <configuration>
                             <finalName>benchmarks</finalName>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>org.openjdk.jmh.Main</mainClass>
                                 </transformer>
                             </transformers>
@@ -119,14 +120,14 @@
 
     <dependencyManagement>
     </dependencyManagement>
+
     <modules>
         <module>upload</module>
         <module>common</module>
-        <!--
-                <module>webapp</module>
-                <module>mail-service</module>
-                <module>mail-api</module>
-                <module>test</module>
-        -->
+        <module>webapp</module>
+        <module>mail-service</module>
+        <module>mail-api</module>
+        <module>test</module>
     </modules>
+    
 </project>
