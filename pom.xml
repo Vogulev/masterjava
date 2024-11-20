@@ -8,7 +8,7 @@
 
     <version>1.0-SNAPSHOT</version>
 
-    <name>Master Java</name>
+    <name>Masterjava Root</name>
     <url>https://github.com/JavaOPs/masterjava</url>
 
     <properties>
@@ -120,7 +120,6 @@
     <dependencyManagement>
     </dependencyManagement>
     <modules>
-        <module>upload</module>
         <module>common</module>
         <!--
                 <module>webapp</module>
