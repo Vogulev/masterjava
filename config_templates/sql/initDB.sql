@@ -12,4 +12,3 @@ CREATE TABLE users (
   email     TEXT NOT NULL,
   flag      user_flag NOT NULL
 );
-
