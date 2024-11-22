@@ -120,6 +120,9 @@
     <dependencyManagement>
     </dependencyManagement>
     <modules>
+        <module>parent</module>
+        <module>parent-web</module>
+
         <module>common</module>
         <!--
                 <module>webapp</module>
