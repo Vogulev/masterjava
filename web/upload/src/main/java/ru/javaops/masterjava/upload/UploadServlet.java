@@ -41,6 +41,7 @@ public class UploadServlet extends HttpServlet {
         final UserDao dao = DBIProvider.getDao(UserDao.class);
 
         try {
+            int chunks = Integer.parseInt(req.getParameter("chunks"));
 //            http://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
             Part filePart = req.getPart("fileToUpload");
             if (filePart.getSize() == 0) {
@@ -48,7 +49,7 @@ public class UploadServlet extends HttpServlet {
             }
             try (InputStream is = filePart.getInputStream()) {
                 List<User> users = userProcessor.process(is);
-                dao.saveUsers(users, 1);
+                dao.saveUsers(users, chunks);
                 webContext.setVariable("users", users);
                 engine.process("result", webContext, resp.getWriter());
             }
