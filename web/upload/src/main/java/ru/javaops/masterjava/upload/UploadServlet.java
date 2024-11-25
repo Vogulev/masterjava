@@ -1,6 +1,7 @@
 package ru.javaops.masterjava.upload;
 
 import org.thymeleaf.context.WebContext;
+import ru.javaops.masterjava.config.DbConfig;
 import ru.javaops.masterjava.persist.DBIProvider;
 import ru.javaops.masterjava.persist.dao.UserDao;
 import ru.javaops.masterjava.persist.model.User;
@@ -23,7 +24,11 @@ import static ru.javaops.masterjava.common.web.ThymeleafListener.engine;
 public class UploadServlet extends HttpServlet {
 
     private final UserProcessor userProcessor = new UserProcessor();
-    private final UserDao dao = DBIProvider.getDao(UserDao.class);
+
+    static {
+        DbConfig.initDBI("jdbc:postgresql://localhost:5432/masterjava", "postgres", "postgres");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final WebContext webContext = new WebContext(req, resp, req.getServletContext(), req.getLocale());
@@ -33,6 +38,7 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final WebContext webContext = new WebContext(req, resp, req.getServletContext(), req.getLocale());
+        final UserDao dao = DBIProvider.getDao(UserDao.class);
 
         try {
 //            http://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
@@ -42,7 +48,7 @@ public class UploadServlet extends HttpServlet {
             }
             try (InputStream is = filePart.getInputStream()) {
                 List<User> users = userProcessor.process(is);
-                //dao.saveUsers(users, 1);
+                dao.saveUsers(users, 1);
                 webContext.setVariable("users", users);
                 engine.process("result", webContext, resp.getWriter());
             }
