@@ -32,7 +32,7 @@ public abstract class UserDao implements AbstractDao {
     @SqlQuery("SELECT * FROM users ORDER BY full_name, email LIMIT :it")
     public abstract List<User> getWithLimit(@Bind int limit);
 
-    @SqlBatch("INSERT INTO users (full_name, email, flag) VALUES (:fullName, :email, CAST(:flag AS user_flag))")
+    @SqlBatch("INSERT INTO users (full_name, email, flag) VALUES (:fullName, :email, CAST(:flag AS user_flag)) ON CONFLICT (email) DO NOTHING")
     public abstract void saveUsers(@BindBean List<User> users, @BatchChunkSize int chunk);
 
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content

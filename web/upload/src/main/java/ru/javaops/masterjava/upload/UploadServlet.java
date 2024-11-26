@@ -23,6 +23,7 @@ import static ru.javaops.masterjava.common.web.ThymeleafListener.engine;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10) //10 MB in memory limit
 public class UploadServlet extends HttpServlet {
 
+    public static final int USERS_VIEW_LIMIT = 20;
     private final UserProcessor userProcessor = new UserProcessor();
 
     static {
@@ -50,9 +51,10 @@ public class UploadServlet extends HttpServlet {
             try (InputStream is = filePart.getInputStream()) {
                 List<User> users = userProcessor.process(is);
                 dao.saveUsers(users, chunks);
-                webContext.setVariable("users", users);
-                engine.process("result", webContext, resp.getWriter());
             }
+            List<User> users = dao.getWithLimit(USERS_VIEW_LIMIT);
+            webContext.setVariable("users", users);
+            engine.process("result", webContext, resp.getWriter());
         } catch (Exception e) {
             webContext.setVariable("exception", e);
             engine.process("exception", webContext, resp.getWriter());
