@@ -3,10 +3,16 @@ DROP SEQUENCE IF EXISTS user_seq;
 DROP TYPE IF EXISTS user_flag;
 DROP TABLE IF EXISTS cities;
 DROP TABLE IF EXISTS groups;
+DROP TYPE IF EXISTS group_type;
 
 CREATE TYPE user_flag AS ENUM ('active', 'deleted', 'superuser');
 
 CREATE SEQUENCE user_seq START 100000;
+
+CREATE TABLE cities (
+                        id        CHAR PRIMARY KEY,
+                        name TEXT NOT NULL
+);
 
 CREATE TABLE users (
   id        INTEGER PRIMARY KEY DEFAULT nextval('user_seq'),
@@ -18,12 +24,12 @@ CREATE TABLE users (
 
 CREATE UNIQUE INDEX email_idx ON users (email);
 
-CREATE TABLE cities (
-    id        CHAR PRIMARY KEY,
-    name TEXT NOT NULL
-);
-
 CREATE TYPE group_type AS ENUM ('REGISTERING', 'CURRENT', 'FINISHED');
+
+CREATE TABLE projects (
+                          name TEXT PRIMARY KEY,
+                          description TEXT
+);
 
 CREATE TABLE groups (
     id CHAR PRIMARY KEY,
@@ -32,8 +38,3 @@ CREATE TABLE groups (
     name TEXT NOT NULL UNIQUE,
     type group_type NOT NULL
 );
-
-CREATE TABLE projects (
-    name TEXT PRIMARY KEY,
-    description TEXT
-)

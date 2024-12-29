@@ -44,7 +44,7 @@ public abstract class UserDao implements AbstractDao {
     public abstract List<User> getWithLimit(@Bind int limit);
 
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
-    @SqlUpdate("TRUNCATE users")
+    @SqlUpdate("TRUNCATE users CASCADE")
     @Override
     public abstract void clean();
 

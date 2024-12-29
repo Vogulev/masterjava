@@ -112,6 +112,24 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi</artifactId>
+            <version>2.78</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bertoncelj.jdbi.entitymapper</groupId>
+            <artifactId>jdbi-entity-mapper</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -121,9 +139,10 @@
     </dependencyManagement>
     <modules>
         <module>parent</module>
-        <module>parent-web</module>
-
         <module>common</module>
+        <module>parent-web</module>
+        <module>persist</module>
+
         <!--
                 <module>webapp</module>
                 <module>mail-service</module>
