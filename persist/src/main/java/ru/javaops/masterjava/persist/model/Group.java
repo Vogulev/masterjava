@@ -1,16 +1,14 @@
 package ru.javaops.masterjava.persist.model;
 
-import com.bertoncelj.jdbi.entitymapper.Column;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class Group {
-    private String id;
-    private String name;
-    private String userId;
-    private String projectName;
-    private GroupType type;
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Group extends BaseEntity {
+    private @NonNull String name;
+    private @NonNull Integer userId;
+    private @NonNull String projectName;
+    private @NonNull GroupType type;
 }

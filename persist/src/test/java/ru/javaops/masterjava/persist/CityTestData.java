@@ -21,7 +21,7 @@ public class CityTestData {
         MOW = new City("mow", "Москва");
         KIV = new City("kiv", "Киев");
         MNSK = new City("mnsk", "Минск");
-        CITIES = ImmutableList.of(SPB, MOW, KIV);
+        CITIES = ImmutableList.of(KIV, MNSK, MOW);
     }
 
     public static void setUp() {

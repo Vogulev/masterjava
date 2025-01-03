@@ -5,8 +5,9 @@ import lombok.*;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class City {
-    private final String id;
-    private final String name;
+    private @NonNull String id;
+    private @NonNull String name;
 }

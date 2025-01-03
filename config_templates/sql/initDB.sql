@@ -1,8 +1,9 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE ;
 DROP SEQUENCE IF EXISTS user_seq;
 DROP TYPE IF EXISTS user_flag;
 DROP TABLE IF EXISTS cities;
 DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS projects;
 DROP TYPE IF EXISTS group_type;
 
 CREATE TYPE user_flag AS ENUM ('active', 'deleted', 'superuser');
@@ -10,7 +11,7 @@ CREATE TYPE user_flag AS ENUM ('active', 'deleted', 'superuser');
 CREATE SEQUENCE user_seq START 100000;
 
 CREATE TABLE cities (
-                        id        CHAR PRIMARY KEY,
+                        id   TEXT PRIMARY KEY,
                         name TEXT NOT NULL
 );
 
