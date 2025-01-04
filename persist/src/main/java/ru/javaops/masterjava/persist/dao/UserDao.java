@@ -26,6 +26,9 @@ public abstract class UserDao implements AbstractDao {
     @SqlQuery("SELECT nextval('user_seq')")
     abstract int getNextVal();
 
+    @SqlQuery("SELECT currval('user_seq')")
+    public abstract int getCurrVal();
+
     public int getSeqAndSkip(int step) {
         int id = getNextVal();
         DBIProvider.getDBI().useHandle(h -> h.execute("ALTER SEQUENCE user_seq RESTART WITH " + (id + step)));
@@ -46,6 +49,9 @@ public abstract class UserDao implements AbstractDao {
     @SqlUpdate("TRUNCATE users CASCADE")
     @Override
     public abstract void clean();
+
+    @SqlQuery("SELECT setval('user_seq', 100000)")
+    public abstract int resetSeq();
 
     //    https://habrahabr.ru/post/264281/
     @SqlBatch("INSERT INTO users (id, full_name, email, flag) VALUES (:id, :fullName, :email, CAST(:flag AS USER_FLAG))" +

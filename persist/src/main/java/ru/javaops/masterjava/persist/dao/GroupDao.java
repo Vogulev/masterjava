@@ -1,13 +1,10 @@
 package ru.javaops.masterjava.persist.dao;
 
 import com.bertoncelj.jdbi.entitymapper.EntityMapperFactory;
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapperFactory;
-import ru.javaops.masterjava.persist.model.City;
 import ru.javaops.masterjava.persist.model.Group;
+import ru.javaops.masterjava.persist.model.User;
 
 import java.util.List;
 
@@ -18,9 +15,23 @@ public abstract class GroupDao implements AbstractDao {
     @SqlUpdate("TRUNCATE groups")
     public abstract void clean();
 
-    @SqlUpdate("INSERT INTO groups (id, user_id, project_name, name, type) VALUES (:id, :userId, projectName, :name, :type) ")
-    public abstract void insert(@BindBean Group group);
+    public Group insert(Group group) {
+        if (group.isNew()) {
+            int id = insertGeneratedId(group);
+            group.setId(id);
+        } else {
+            insertWitId(group);
+        }
+        return group;
+    }
 
-    @SqlQuery("SELECT * FROM groups ORDER BY name LIMIT :it")
-    public abstract List<Group> getWithLimit(@Bind int limit);
+    @GetGeneratedKeys
+    @SqlUpdate("INSERT INTO groups (user_id, project_name, name, type) VALUES (:userId, :projectName, :name, CAST(:type AS GROUP_TYPE))")
+    abstract int insertGeneratedId(@BindBean Group group);
+
+    @SqlUpdate("INSERT INTO users (id, user_id, project_name, name, type) VALUES (:id, :userId, :projectName, :name, CAST(:type AS GROUP_TYPE))")
+    abstract void insertWitId(@BindBean Group group);
+
+    @SqlQuery("SELECT * FROM groups WHERE project_name = :project")
+    public abstract List<Group> findAllByProject(@Bind("project") String projectName);
 }
