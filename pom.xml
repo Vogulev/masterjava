@@ -142,7 +142,7 @@
         <module>common</module>
         <module>parent-web</module>
         <module>persist</module>
-
+        <module>web</module>
         <!--
                 <module>webapp</module>
                 <module>mail-service</module>
