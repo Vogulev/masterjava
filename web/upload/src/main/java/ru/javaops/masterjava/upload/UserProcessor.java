@@ -48,7 +48,7 @@ public class UserProcessor {
      * return failed users chunks
      */
     public List<FailedEmails> process(final InputStream is, int chunkSize) throws XMLStreamException, JAXBException {
-        log.info("Start processing with chunkSize=" + chunkSize);
+        log.info("Start processing with chunkSize={}", chunkSize);
 
         Map<String, Future<List<String>>> chunkFutures = new LinkedHashMap<>();  // ordered map (emailRange -> chunk future)
 
