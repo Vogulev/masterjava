@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP SEQUENCE IF EXISTS user_seq;
 DROP SEQUENCE IF EXISTS group_seq;
 DROP TYPE IF EXISTS user_flag;
-DROP TYPE IF EXISTS group_type;
+DROP TYPE IF EXISTS group_type CASCADE;
 DROP TABLE IF EXISTS cities;
 DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS projects;
@@ -25,7 +25,7 @@ CREATE TABLE users
     full_name TEXT      NOT NULL,
     email     TEXT      NOT NULL,
     flag      user_flag NOT NULL,
-    city      CHAR REFERENCES cities
+    city      TEXT REFERENCES cities
 );
 
 CREATE UNIQUE INDEX email_idx ON users (email);
