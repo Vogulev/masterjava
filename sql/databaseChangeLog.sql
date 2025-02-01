@@ -32,3 +32,14 @@ CREATE TABLE user_group (
   group_id INTEGER NOT NULL REFERENCES groups (id),
   CONSTRAINT users_group_idx UNIQUE (user_id, group_id)
 );
+
+--changeset avogulev:3
+CREATE TABLE mails (
+    id          INTEGER PRIMARY KEY DEFAULT nextval('common_seq'),
+    success     BOOLEAN default false,
+    receiver    TEXT NOT NULL,
+    cc          TEXT,
+    subject     TEXT,
+    body        TEXT,
+    result      TEXT
+);
